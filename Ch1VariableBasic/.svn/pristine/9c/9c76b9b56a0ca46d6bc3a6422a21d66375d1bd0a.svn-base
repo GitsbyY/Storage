@@ -1,0 +1,15 @@
+
+public class VarEx2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("새롭게 추가함");
+		System.out.println("이게 정답이다");
+		System.out.println("이게 정답이다");
+		System.out.println("이게 정답이다");
+		System.out.println("이게 정답이다");
+		System.out.println("이게 정답이다");
+		System.out.println("이게 정답이다");
+	}
+
+}
