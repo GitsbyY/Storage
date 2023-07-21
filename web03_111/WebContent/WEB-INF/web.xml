@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+xsi:schemaLocation=
+"http://xmlns.jcp.org/xml/ns/javaee 
+http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
+version="3.1">
+
+  <display-name>web03_111</display-name>
+<!--   xml 파일에서 변수 등록하는 방법이다. -->
+  <servlet>
+  	<servlet-name>HelloWorld</servlet-name>
+  	<servlet-class>stu.edu.servlet.HelloWorld</servlet-class>
+<!--   	생성자 파라매터로 생성을 하자마자 값이 정해진다.  -->
+<!-- 	키 밸류라는 것으로 email이 정해진다 -->
+<!-- 	처음 화면을 만들기 위해서 필요한 준비물. 그게 명확 할 때 생성자 값을 정해서 설정해주면 된다. -->
+<!--   	init-param 이 static이다. 현업에서는 static을 사용하지 않는다 -->
+  	<init-param> 
+  		<param-name>email</param-name>
+  		<param-value>test@ezen.com</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>HelloWorld</servlet-name>
+  	<url-pattern>/helloWorld</url-pattern>
+  </servlet-mapping>
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
