@@ -4,8 +4,8 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>회원등록</title>
+	<meta charset="UTF-8" http-equiv='Refresh' content='1; url=list'>
+	<title>회원등록결과</title>
 </head>
 
 <body>

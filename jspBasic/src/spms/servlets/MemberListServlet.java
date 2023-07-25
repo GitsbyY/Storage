@@ -12,7 +12,9 @@ import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
+import javax.servlet.annotation.WebServlet;
+//이걸 넣으니까 web.xml에서 멤버리스트를 주석처리 했는데도 뜬다.
+@WebServlet("/member/list")
 							//implements에서 extends로 바뀌었다
 							//추상 클래스이다.
 public class MemberListServlet extends GenericServlet{
@@ -56,7 +58,7 @@ public class MemberListServlet extends GenericServlet{
 			
 //			sql에서 작성을 하는 것이 아니라 여기에서 불러오는 것이다.
 			String sql = "SELECT MNO, MNAME, EMAIL, CRE_DATE"
-					+ " FROM MEMBERS"
+					+ " FROM MEMBERS" //sql에서 엔터는 띄어쓰기로 표현
 					+ " ORDER BY MNO DESC";
 			
 //			4단계 sql문 수행(전송) -> stmt.executeQuery(sql)
@@ -89,9 +91,15 @@ public class MemberListServlet extends GenericServlet{
 			//내가 원하는대로 html화면을 구성한다. 
 			while(rs.next()) {
 				out.println(rs.getInt("MNO") + ". " +
-						rs.getString("MNAME") + ", " +
+						"<a href='./update?mNo=" + 
+						rs.getInt("MNO") + 
+						"'>" +
+						rs.getString("MNAME") + "</a>, " +
 						rs.getString("EMAIL") + ", " +
-						rs.getString("CRE_DATE") + "<br>"
+						rs.getString("CRE_DATE") + 
+						"<a href='./delete?mNo=" + 
+						rs.getInt("MNO") +"'>"+ "[삭제]</a>" +
+						"<br>"
 				);
 			}
 			out.println("</body></html>");
