@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -73,16 +75,18 @@ public class MemberAddServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 //		Statement stmt =null;
 //		ResultSet rs = null;
+	
+//		ServletContext sc = this.getServletContext();
 		
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String user = "ezen";
-		String password = "ezen12";
-		
+//		String driver = sc.getInitParameter("driver");
+//		String url = sc.getInitParameter("url");
+//		String user = sc.getInitParameter("user");
+//		String password = sc.getInitParameter("password");
 		//이 식을 넣음으로 인해서 한글이 깨지지 않고 출력된다.
 		//서블릿에서 getParameter를 호출하면 기본적으로 ISO-8859....으로 인코딩 된다.
 		//그런데 클라이언트가 보낸 문자를 영어라고 간주하고 유니코드로 변경하기 때문에 한글이 깨진다.
 		//영어는 1byte, 한글은 3byte이다.
-		req.setCharacterEncoding("UTF-8");
+//		req.setCharacterEncoding("UTF-8");
 		
 		// 사용자 입력 매개변수의 값 가져오기
 		String emailStr = req.getParameter("email");
@@ -92,9 +96,9 @@ public class MemberAddServlet extends HttpServlet {
 		
 		try {
 			
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			ServletContext sc = this.getServletContext();
 			
-			conn = DriverManager.getConnection(url, user, password);
+			conn = (Connection)sc.getAttribute("conn");
 			
 //			String sql ="INSERT INTO MEMBERS"
 //					+ " VALUE(EMAIL, PWD, MNAME)"
@@ -143,12 +147,21 @@ public class MemberAddServlet extends HttpServlet {
 ////			res는 윈도우 그 자체 //5초 뒤에 페이지리스트로 바뀐다
 //			res.addHeader("Refresh", "5; url=./list");
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();} 
+			
+		}catch (SQLException e) {
+			
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			res.setCharacterEncoding("UTF-8");
+			req.setAttribute("error", e);
+			req.setAttribute("msg", "회원 추가하다 오류남");
+			RequestDispatcher dispatcher = 
+					req.getRequestDispatcher("/Error.jsp");
+//			jsp의 인클루드랑 똑같다 -> 포워딩
+			dispatcher.forward(req, res);
 		} finally {	
 			if(pstmt != null) {
 				try {
@@ -158,14 +171,7 @@ public class MemberAddServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			if(conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			
 			
 		}//finally 끝
 			

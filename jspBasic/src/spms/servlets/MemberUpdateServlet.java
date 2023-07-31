@@ -11,11 +11,12 @@ import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+@WebServlet("/member/update")
 public class MemberUpdateServlet extends HttpServlet{
 
 	@Override
@@ -26,24 +27,27 @@ public class MemberUpdateServlet extends HttpServlet{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ServletContext sc = this.getServletContext();
 		
-		String driver = sc.getInitParameter("driver");
-		String url = sc.getInitParameter("url");
-		String user = sc.getInitParameter("user");
-		String password = sc.getInitParameter("password");
 		
-		int mNo = Integer.parseInt(req.getParameter("mNo"));
+//		String driver = sc.getInitParameter("driver");
+//		String url = sc.getInitParameter("url");
+//		String user = sc.getInitParameter("user");
+//		String password = sc.getInitParameter("password");
+		
+		int mNo = Integer.parseInt(req.getParameter("no"));
 		
 		String sql = "";
 			  
 		
 		try {
-			Class.forName(driver);
-			System.out.println("오라클 드라이버 로드");
+//			Class.forName(driver);
+//			System.out.println("오라클 드라이버 로드");
+//			
+//			conn = DriverManager.getConnection(url, user, password);
 			
-			conn = DriverManager.getConnection(url, user, password);
+			ServletContext sc = this.getServletContext();
 			
+			conn = (Connection)sc.getAttribute("conn");
 			sql = "SELECT MNAME, EMAIL, CRE_DATE";
 			sql += " FROM MEMBERS"; //sql에서 엔터는 띄어쓰기로 표현
 			sql += " WHERE MNO=?";
@@ -85,6 +89,8 @@ public class MemberUpdateServlet extends HttpServlet{
 			htmlStr +=  "'><br>";
 			htmlStr +=  "가입일 :" + creDate + "<br>";
 			htmlStr +=  "<input type='submit' value='저장'>";
+			htmlStr +=  "<input type='button' value='삭제' ";
+			htmlStr +=  "onclick='location.href=\"./delete?no=" + mNo + "\"'>";
 			htmlStr += 	"<input type='reset' value='최소' ";
 			htmlStr +=  "onclick='location.href=\"./list\"'>";
 			htmlStr +=  "</form>";
@@ -95,10 +101,11 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 			System.out.println("수행되나?");
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} 
+//		catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();} 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {	
@@ -138,29 +145,33 @@ public class MemberUpdateServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, 
 			HttpServletResponse res) throws ServletException, IOException {
 		
-		req.setCharacterEncoding("UTF-8");
+//		req.setCharacterEncoding("UTF-8");
 		
 		Connection conn =null;
 		PreparedStatement pstmt = null;
 		
-		ServletContext sc = this.getServletContext();
 		
-		String driver = sc.getInitParameter("driver");
-		String url = sc.getInitParameter("url");
-		String user = sc.getInitParameter("user");
-		String password = sc.getInitParameter("password");
+		
+//		String driver = sc.getInitParameter("driver");
+//		String url = sc.getInitParameter("url");
+//		String user = sc.getInitParameter("user");
+//		String password = sc.getInitParameter("password");
 		
 		String email =req.getParameter("email");
 		String name =req.getParameter("name");
-		String mNo =req.getParameter("mNo");
+		String mNo =req.getParameter("no");
 		
 		String sql = "";
 		
 		try {
 			
-			Class.forName(driver);
+			ServletContext sc = this.getServletContext();
 			
-			conn = DriverManager.getConnection(url, user, password);
+			conn = (Connection)sc.getAttribute("conn");
+			
+//			Class.forName(driver);
+//			
+//			conn = DriverManager.getConnection(url, user, password);
 			
 			sql = "UPDATE MEMBERS";
 			sql += " SET EMAIL = ?, MNAME = ?, MOD_DATE = SYSDATE";
@@ -177,10 +188,11 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 			res.sendRedirect("./list");
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} 
+//		catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();} 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {	
@@ -192,14 +204,14 @@ public class MemberUpdateServlet extends HttpServlet{
 					e.printStackTrace();
 				}
 			}
-			if(conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+//			if(conn != null) {
+//				try {
+//					conn.close();
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
 			
 		}//finally 끝
 	
