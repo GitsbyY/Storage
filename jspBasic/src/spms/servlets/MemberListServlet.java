@@ -44,7 +44,7 @@ public class MemberListServlet extends HttpServlet{
 			
 			conn = (Connection)sc.getAttribute("conn");
 		
-			String sql = "SELECT MNO, MNAME, EMAIL, CRE_DATE"
+			String sql = "SELECT MNO, MNAME, EMAIL, CRE_DATE, MOD_DATE"
 					+ " FROM MEMBERS"
 					+ " ORDER BY MNO DESC";
 			pstmt = conn.prepareStatement(sql);
@@ -91,7 +91,7 @@ public class MemberListServlet extends HttpServlet{
 			String mname ="";
 			String email = "";
 			Date creDate = null;
-			
+			Date modDate = null;
 			while(rs.next()) {
 				MemberDto memberDto = new MemberDto();
 				
@@ -99,12 +99,12 @@ public class MemberListServlet extends HttpServlet{
 				mname = rs.getString("MNAME");
 				email = rs.getString("EMAIL");
 				creDate = rs.getDate("CRE_DATE");
-				
+				modDate = rs.getDate("MOD_DATE");
 				memberDto.setNo(mno);
 				memberDto.setName(mname);
 				memberDto.setEmail(email);
 				memberDto.setCreateDate(creDate);
-				
+				memberDto.setModifiedDate(modDate);
 				memberList.add(memberDto);
 			}
 			

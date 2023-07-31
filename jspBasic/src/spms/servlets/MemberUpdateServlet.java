@@ -40,14 +40,11 @@ public class MemberUpdateServlet extends HttpServlet{
 			  
 		
 		try {
-//			Class.forName(driver);
-//			System.out.println("오라클 드라이버 로드");
-//			
-//			conn = DriverManager.getConnection(url, user, password);
-			
+
 			ServletContext sc = this.getServletContext();
 			
 			conn = (Connection)sc.getAttribute("conn");
+			
 			sql = "SELECT MNAME, EMAIL, CRE_DATE";
 			sql += " FROM MEMBERS"; //sql에서 엔터는 띄어쓰기로 표현
 			sql += " WHERE MNO=?";
@@ -101,11 +98,7 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 			System.out.println("수행되나?");
 			
-		} 
-//		catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();} 
-		catch (SQLException e) {
+		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {	
@@ -125,16 +118,7 @@ public class MemberUpdateServlet extends HttpServlet{
 					e.printStackTrace();
 				}
 			}
-			
-			if(conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
+	
 		}//finally 끝
 		
 		
@@ -150,16 +134,9 @@ public class MemberUpdateServlet extends HttpServlet{
 		Connection conn =null;
 		PreparedStatement pstmt = null;
 		
-		
-		
-//		String driver = sc.getInitParameter("driver");
-//		String url = sc.getInitParameter("url");
-//		String user = sc.getInitParameter("user");
-//		String password = sc.getInitParameter("password");
-		
 		String email =req.getParameter("email");
 		String name =req.getParameter("name");
-		String mNo =req.getParameter("no");
+		String mNo =req.getParameter("mNo");
 		
 		String sql = "";
 		
@@ -168,10 +145,6 @@ public class MemberUpdateServlet extends HttpServlet{
 			ServletContext sc = this.getServletContext();
 			
 			conn = (Connection)sc.getAttribute("conn");
-			
-//			Class.forName(driver);
-//			
-//			conn = DriverManager.getConnection(url, user, password);
 			
 			sql = "UPDATE MEMBERS";
 			sql += " SET EMAIL = ?, MNAME = ?, MOD_DATE = SYSDATE";
@@ -188,11 +161,7 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 			res.sendRedirect("./list");
 			
-		} 
-//		catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();} 
-		catch (SQLException e) {
+		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {	
@@ -204,19 +173,9 @@ public class MemberUpdateServlet extends HttpServlet{
 					e.printStackTrace();
 				}
 			}
-//			if(conn != null) {
-//				try {
-//					conn.close();
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-			
+
 		}//finally 끝
-	
-		
-	
+
 	}
 }
 

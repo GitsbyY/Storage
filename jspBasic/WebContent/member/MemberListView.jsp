@@ -29,12 +29,13 @@
          
    %>
 <!--    		expression -->
-	   <%=memberDto.getNo()%>,
+	   <%=memberDto.getNo()%>.
 	   <a href='./update?no=<%=memberDto.getNo()%>'>
 	      <%=memberDto.getName()%>
 	   </a>
-	   , <%=memberDto.getEmail()%>, 
+	   , <%=memberDto.getEmail()%>
 	   , <%=memberDto.getCreateDate()%>
+	   , <%=memberDto.getModifiedDate()%>
 	   <a href='./delete?no=<%=memberDto.getNo()%>'>[삭제]</a>
 	   <br>
 	   <%

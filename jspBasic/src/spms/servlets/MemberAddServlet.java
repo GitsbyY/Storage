@@ -155,13 +155,13 @@ public class MemberAddServlet extends HttpServlet {
 			
 			e.printStackTrace();
 			
-			res.setCharacterEncoding("UTF-8");
-			req.setAttribute("error", e);
-			req.setAttribute("msg", "회원 추가하다 오류남");
-			RequestDispatcher dispatcher = 
-					req.getRequestDispatcher("/Error.jsp");
+//			res.setCharacterEncoding("UTF-8");
+//			req.setAttribute("error", e);
+//			req.setAttribute("msg", "회원 추가하다 오류남");
+//			RequestDispatcher dispatcher = 
+//					req.getRequestDispatcher("/Error.jsp");
 //			jsp의 인클루드랑 똑같다 -> 포워딩
-			dispatcher.forward(req, res);
+//			dispatcher.forward(req, res);
 		} finally {	
 			if(pstmt != null) {
 				try {
