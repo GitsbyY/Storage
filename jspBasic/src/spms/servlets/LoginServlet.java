@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet{
 			pstmt.setString(colIndex, pwd);
 			
 			rs = pstmt.executeQuery();
-			
+					
 			if(rs.next()) {
 				
 				email = rs.getString("email");
@@ -77,8 +77,27 @@ public class LoginServlet extends HttpServlet{
 				
 				res.sendRedirect("../member/list");
 				
+			}else {
+				RequestDispatcher rd = 
+						req.getRequestDispatcher("./LoginFail.jsp");
+				rd.forward(req, res);
+				
+//				forword
+//				주체
+//				/auth/login
+//				위임
+//				./LoginFail.jsp
+//				결과
+//				http://localhost:9180/jspBasic/auth/login
+//				sendRedirect
+//				주체
+//				/auth/login
+//				위임
+//				./LoginFail.jsp
+//				결과
+//				http://localhost:9180/jspBasic/auth/LoginFail.jsp
+				
 			}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

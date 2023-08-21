@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,6 +53,10 @@ public class MemberDeleteServlet extends HttpServlet{
          
       }catch (SQLException e) {
          e.printStackTrace();
+         RequestDispatcher dispatcher = 
+					req.getRequestDispatcher("/Error.jsp");
+//			jsp의 인클루드랑 똑같다 -> 포워딩
+			dispatcher.forward(req, res);
       } finally {
          if(pstmt !=null) {
             try {

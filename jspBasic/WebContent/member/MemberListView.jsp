@@ -21,9 +21,16 @@
       <a href='./add'>신규 회원</a>
    </p>
 <!--    scriptlet --> 
+  
+<jsp:useBean 
+	id="memberList"
+	scope="request"
+	class="java.util.ArrayList"
+	type="java.util.ArrayList<spms.dto.MemberDto>"/> 
+  
    <%
-      ArrayList<MemberDto> memberList = 
-         (ArrayList<MemberDto>)request.getAttribute("memberList");
+//       ArrayList<MemberDto> memberList = 
+//          (ArrayList<MemberDto>)request.getAttribute("memberList");
    
       for(MemberDto memberDto : memberList){
          

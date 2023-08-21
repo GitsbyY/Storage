@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -64,39 +65,45 @@ public class MemberUpdateServlet extends HttpServlet{
 				email = rs.getString("EMAIL");
 				creDate = rs.getDate("CRE_DATE");
 			}
-			
 			res.setContentType("text/html");
 			res.setCharacterEncoding("UTF-8");
-			PrintWriter out = res.getWriter();
 			
-			String htmlStr = "";
-			
-			htmlStr +=	"<html>";
-			htmlStr +=	"<head>";
-			htmlStr +=	"<title>회원정보</title>";
-			htmlStr += 	"</head>";
-			htmlStr += 	"<body>";
-			htmlStr +=  "<h1>회원정보 수정</h1>";
-			htmlStr +=  "<form action='./update' method='post'>";
-			htmlStr +=  "번호 : <input type='text' name='mNo' value='" + mNo + "' ";
-			htmlStr	+=	"readonly='readonly'><br>";
-			htmlStr +=  "이름 : <input type='text' name='name' value='" + mName;
-			htmlStr +=  "'><br>";
-			htmlStr +=  "이메일 : <input type='text' name='email' value='" + email;
-			htmlStr +=  "'><br>";
-			htmlStr +=  "가입일 :" + creDate + "<br>";
-			htmlStr +=  "<input type='submit' value='저장'>";
-			htmlStr +=  "<input type='button' value='삭제' ";
-			htmlStr +=  "onclick='location.href=\"./delete?no=" + mNo + "\"'>";
-			htmlStr += 	"<input type='reset' value='최소' ";
-			htmlStr +=  "onclick='location.href=\"./list\"'>";
-			htmlStr +=  "</form>";
-			htmlStr +=  "</body>";
-			htmlStr +=  "</html>";
-			
-			out.println(htmlStr);
-			
-			System.out.println("수행되나?");
+			RequestDispatcher dispatcher = 
+					req.getRequestDispatcher("../MemberUpdateForm.jsp");
+//			인클루딩
+			dispatcher.include(req, res);
+//			res.setContentType("text/html");
+//			res.setCharacterEncoding("UTF-8");
+//			PrintWriter out = res.getWriter();
+//			
+//			String htmlStr = "";
+//			
+//			htmlStr +=	"<html>";
+//			htmlStr +=	"<head>";
+//			htmlStr +=	"<title>회원정보</title>";
+//			htmlStr += 	"</head>";
+//			htmlStr += 	"<body>";
+//			htmlStr +=  "<h1>회원정보 수정</h1>";
+//			htmlStr +=  "<form action='./update' method='post'>";
+//			htmlStr +=  "번호 : <input type='text' name='mNo' value='" + mNo + "' ";
+//			htmlStr	+=	"readonly='readonly'><br>";
+//			htmlStr +=  "이름 : <input type='text' name='name' value='" + mName;
+//			htmlStr +=  "'><br>";
+//			htmlStr +=  "이메일 : <input type='text' name='email' value='" + email;
+//			htmlStr +=  "'><br>";
+//			htmlStr +=  "가입일 :" + creDate + "<br>";
+//			htmlStr +=  "<input type='submit' value='저장'>";
+//			htmlStr +=  "<input type='button' value='삭제' ";
+//			htmlStr +=  "onclick='location.href=\"./delete?no=" + mNo + "\"'>";
+//			htmlStr += 	"<input type='reset' value='최소' ";
+//			htmlStr +=  "onclick='location.href=\"./list\"'>";
+//			htmlStr +=  "</form>";
+//			htmlStr +=  "</body>";
+//			htmlStr +=  "</html>";
+//			
+//			out.println(htmlStr);
+//			
+//			System.out.println("수행되나?");
 			
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -129,7 +136,7 @@ public class MemberUpdateServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, 
 			HttpServletResponse res) throws ServletException, IOException {
 		
-//		req.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");
 		
 		Connection conn =null;
 		PreparedStatement pstmt = null;
